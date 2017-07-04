@@ -61,7 +61,7 @@ def  _plot_image(ax, img):
 
 
 def _plot_prediction_bar(ax, r):
-    perf = list(c[1] for c in r.json()['result'][0][0])
+    perf = list(c[1] for c in r.json()[0][0])
     ax.barh(range(3, 0, -1), perf, align='center', color='#55DD55')
     ax.tick_params(axis='both',       
                    which='both',      
