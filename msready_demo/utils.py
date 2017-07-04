@@ -70,7 +70,7 @@ def _plot_prediction_bar(ax, r):
                    left='off',
                    right='off',
                    labelbottom='off') 
-    tick_labels = reversed(list(' '.join(c[0].split()[1:]).split(',')[0] for c in r.json()['result'][0][0]))
+    tick_labels = reversed(list(' '.join(c[0].split()[1:]).split(',')[0] for c in r.json()[0][0]))
     ax.yaxis.set_ticks([1,2,3])
     ax.yaxis.set_ticklabels(tick_labels, position=(0.5,0), minor=False, horizontalalignment='center')
 
