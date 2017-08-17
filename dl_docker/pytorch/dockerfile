@@ -1,6 +1,6 @@
 FROM masalvar/pytorch
 
-RUN conda install --name pytorch-py35 jupyter
+RUN conda install --name pytorch-py35 jupyter sklearn
 
 COPY jupyter_notebook_config.py /root/.jupyter/
 
