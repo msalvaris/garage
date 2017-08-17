@@ -1,0 +1,8 @@
+FROM masalvar/pytorch
+
+RUN conda install --name pytorch-py35 jupyter
+
+COPY jupyter_notebook_config.py /root/.jupyter/
+
+EXPOSE 9999
+
