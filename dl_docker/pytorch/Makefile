@@ -9,7 +9,7 @@ endef
 export PROJECT_HELP_MSG
 
 help:
-	echo $$PROJECT_HELP_MSG | less
+	echo "$$PROJECT_HELP_MSG" | less
 
 pytorch: pytorch-base
 	docker build -t masalvar/pytorch .
