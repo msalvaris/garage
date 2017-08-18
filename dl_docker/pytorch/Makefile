@@ -1,12 +1,10 @@
 define PROJECT_HELP_MSG
-
 Usage:
     make help                   show this message
     make clean                  remove intermediate files
 
 	make pytorch				make jupyter pytorch docker image
     make start-jupyter          launch jupyter server inside pytorch docker container
-
 endef
 export PROJECT_HELP_MSG
 
