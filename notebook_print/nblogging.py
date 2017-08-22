@@ -1,4 +1,41 @@
 import sys
+from ipykernel.iostream import OutStream
+from toolz import curry
+
+
+class NotebookLogger(OutStream):
+    """ Will log output of notebook cells to specified outputs 
+    
+    >>> nb_logger = NotebookLogger(sys.stdout.session,
+                                   sys.stdout.pub_thread,
+                                   sys.stdout.name,
+                                   sys.__stdout__)
+    """
+    def __init__(self, session, pub_thread, name, *outputs, pipe=None):
+        self._outputs = outputs
+        super(NotebookLogger, self).__init__(session, pub_thread, name, pipe=pipe)
+        
+    def write(self, message):
+        for output in self._outputs:
+            output.write(message)
+        super(NotebookLogger, self).write(message)
+
+        
+@curry        
+def redirect_to(orig_str, redirection):
+    """ Redirects specified system attribute to redirection
+    """
+    orig_stdout = getattr(sys, orig_str)
+
+    def reset_redirect():
+        setattr(sys, orig_str, orig_stdout)
+
+    setattr(sys, orig_str, redirection)
+    return reset_redirect
+
+
+error_to = redirect_to('stderr')
+output_to = redirect_to('stdout')
 
 
 class Logger(object):
@@ -14,26 +51,3 @@ class Logger(object):
     def flush(self):
         pass 
     
-    
-def error_to(output):
-    """ Redirects stderr to a specified output location
-    """
-    orig_stderr = sys.stderr
-    
-    def reset_stderr():
-        sys.stderr = orig_stdout
-    
-    sys.stderr = output
-    return reset_stderr
-
-
-def output_to(output):
-    """ Redirects stdout to a specified output location
-    """
-    orig_stdout = sys.stdout
-    
-    def reset_stdout():
-        sys.stdout = orig_stdout
-    
-    sys.stdout = output
-    return reset_stdout
